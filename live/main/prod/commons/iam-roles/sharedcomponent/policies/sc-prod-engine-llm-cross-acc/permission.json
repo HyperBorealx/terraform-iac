@@ -1,0 +1,24 @@
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Action": [
+				"es:ESHttpGet",
+				"es:ESHttpPost"
+			],
+			"Effect": "Allow",
+			"Resource": "arn:aws:es:eu-west-1:501723963525:domain/appdev-prod-fb/*"
+		},
+		{
+			"Action": [
+				"kms:ReEncrypt*",
+				"kms:GenerateDataKey*",
+				"kms:Encrypt",
+				"kms:DescribeKey",
+				"kms:Decrypt"
+			],
+			"Effect": "Allow",
+			"Resource": "arn:aws:kms:eu-west-1:501723963525:key/cd8a5cc3-19c2-47d2-9794-4b78328d3342"
+		}
+	]
+}

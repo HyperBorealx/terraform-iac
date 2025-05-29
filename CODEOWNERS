@@ -1,0 +1,3 @@
+_modules/vpc @PSL-Group-Services-Sarl/noc
+_modules/eks-cluster @PSL-Group-Services-Sarl/devops @PSL-Group-Services-Sarl/noc
+. @devops @PSL-Group-Services-Sarl/noc

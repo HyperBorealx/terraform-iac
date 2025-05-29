@@ -1,0 +1,7 @@
+# Terraform directories
+**/.terraform/*
+.terraform/
+**/tfplan
+*.DS_Store
+unencrypted_secrets
+terraform
