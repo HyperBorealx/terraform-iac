@@ -1,0 +1,19 @@
+{
+  "Statement": [
+    {
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "oidc.eks.eu-west-1.amazonaws.com/id/${eks_oidc_issuer_id}:sub": [
+            "system:serviceaccount:networking:external-dns-route53"
+          ]
+        }
+      },
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::${account_id}:oidc-provider/oidc.eks.${region}.amazonaws.com/id/${eks_oidc_issuer_id}"
+      }
+    }
+  ],
+  "Version": "2012-10-17"
+}

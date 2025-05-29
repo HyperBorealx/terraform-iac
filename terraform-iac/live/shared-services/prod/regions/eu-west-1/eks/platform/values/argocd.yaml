@@ -1,0 +1,19 @@
+server:
+  service:
+    type: ClusterIP
+
+  nodeSelector:
+    eks.amazonaws.com/compute-type: auto
+  extraArgs:
+    - --insecure
+  config:
+    params:
+      server.insecure: "true"
+  ingress:
+    enabled: true
+    ingressClassName: internal
+    hostname: argocd.pslgroup.io
+    #tls: true
+  # RBAC configuration
+  rbac:
+    policy.default: role:readonly
