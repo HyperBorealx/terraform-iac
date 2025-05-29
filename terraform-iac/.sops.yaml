@@ -1,4 +1,0 @@
-creation_rules:
-  - kms: arn:aws:kms:eu-west-1:300476207176:alias/prod-shared-services
-    path_regex: \.enc\.ya?ml$
-    aws_profile: ss
