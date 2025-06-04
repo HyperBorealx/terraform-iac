@@ -12,6 +12,12 @@ workflows:
         - run: terraform apply $PLANFILE
 
 projects:
+  - name: mec-development-staging-cloudfront
+    dir: live/mec-development/staging/global/cloudfront/shared
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
   - name: shared-services-prod-common-iam-roles
     dir: live/shared-services/prod/commons/iam-roles
     workflow: terraform
