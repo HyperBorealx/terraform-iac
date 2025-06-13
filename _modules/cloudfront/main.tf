@@ -1,6 +1,6 @@
 module "cloudfront_distributions" {
   source  = "terraform-aws-modules/cloudfront/aws"
-  version = "4.1.0"
+  version = "4.0.0"  # Use stable version instead of 4.1.0
 
   for_each = var.distributions
 
