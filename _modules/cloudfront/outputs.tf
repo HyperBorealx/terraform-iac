@@ -68,6 +68,14 @@ output "distribution_trusted_signers" {
   }
 }
 
+output "distribution_tags" {
+  description = "Map of distribution names to their tags"
+  value = {
+    for k, dist in module.cloudfront_distributions : k => dist.cloudfront_distribution_tags
+  }
+}
+
+# Origin Access Control outputs
 output "origin_access_controls" {
   description = "Map of distribution names to their origin access controls"
   value = {
@@ -82,6 +90,7 @@ output "origin_access_control_ids" {
   }
 }
 
+# Origin Access Identity outputs
 output "origin_access_identities" {
   description = "Map of distribution names to their origin access identities"
   value = {
@@ -103,6 +112,15 @@ output "origin_access_identity_iam_arns" {
   }
 }
 
+# VPC Origin outputs
+output "vpc_origin_ids" {
+  description = "Map of distribution names to their VPC origin IDs"
+  value = {
+    for k, dist in module.cloudfront_distributions : k => dist.cloudfront_vpc_origin_ids
+  }
+}
+
+# Monitoring outputs
 output "monitoring_subscription_ids" {
   description = "Map of distribution names to their monitoring subscription IDs"
   value = {

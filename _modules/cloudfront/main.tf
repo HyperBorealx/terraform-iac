@@ -1,41 +1,57 @@
 module "cloudfront_distributions" {
   source  = "terraform-aws-modules/cloudfront/aws"
-  version = "4.0.0"  # Use stable version instead of 4.1.0
+  version = "4.1.0"
 
   for_each = var.distributions
 
-  aliases                 = each.value.aliases
-  comment                 = each.value.comment
-  enabled                 = each.value.enabled
-  is_ipv6_enabled        = each.value.is_ipv6_enabled
-  price_class            = each.value.price_class
-  retain_on_delete       = each.value.retain_on_delete
-  wait_for_deployment    = each.value.wait_for_deployment
+  # Pass through all configuration directly
+  aliases                         = try(each.value.aliases, [])
+  comment                         = try(each.value.comment, "")
+  continuous_deployment_policy_id = try(each.value.continuous_deployment_policy_id, null)
+  default_root_object             = try(each.value.default_root_object, null)
+  enabled                         = try(each.value.enabled, true)
+  http_version                    = try(each.value.http_version, "http2")
+  is_ipv6_enabled                 = try(each.value.is_ipv6_enabled, true)
+  price_class                     = try(each.value.price_class, "PriceClass_100")
+  retain_on_delete                = try(each.value.retain_on_delete, false)
+  staging                         = try(each.value.staging, false)
+  wait_for_deployment             = try(each.value.wait_for_deployment, false)
+  web_acl_id                      = try(each.value.web_acl_id, null)
 
-  origin = each.value.origin
-
+  # Origins and cache behaviors - pass through exactly as provided
+  origin                 = each.value.origin
+  origin_group           = try(each.value.origin_group, {})
   default_cache_behavior = each.value.default_cache_behavior
-  ordered_cache_behavior = each.value.ordered_cache_behavior
+  ordered_cache_behavior = try(each.value.ordered_cache_behavior, [])
 
-  custom_error_response = each.value.custom_error_response
+  # Error handling and restrictions - prevent null value issues
+  custom_error_response = try(length(each.value.custom_error_response) > 0 ? each.value.custom_error_response : {}, {})
+  viewer_certificate    = each.value.viewer_certificate
+  geo_restriction       = try(each.value.geo_restriction, { restriction_type = "none", locations = [] })
+  logging_config        = try(each.value.logging_config, {})
 
-  viewer_certificate = each.value.viewer_certificate
+  # Origin Access Control (OAC) - Modern approach
+  create_origin_access_control = try(each.value.create_origin_access_control, false)
+  origin_access_control       = try(each.value.origin_access_control, {})
 
-  geo_restriction = each.value.geo_restriction
+  # Origin Access Identity (OAI) - Legacy approach
+  create_origin_access_identity = try(each.value.create_origin_access_identity, false)
+  origin_access_identities     = try(each.value.origin_access_identities, {})
 
-  logging_config = each.value.logging_config
+  # VPC Origins
+  create_vpc_origin = try(each.value.create_vpc_origin, false)
+  vpc_origin       = try(each.value.vpc_origin, {})
 
-  create_origin_access_control = each.value.create_origin_access_control
-  origin_access_control       = each.value.origin_access_control
+  # Monitoring
+  create_monitoring_subscription           = try(each.value.create_monitoring_subscription, false)
+  realtime_metrics_subscription_status    = try(each.value.realtime_metrics_subscription_status, "Enabled")
 
-  create_origin_access_identity = each.value.create_origin_access_identity
-  origin_access_identities     = each.value.origin_access_identities
-
-  create_monitoring_subscription           = each.value.create_monitoring_subscription
-  realtime_metrics_subscription_status    = each.value.realtime_metrics_subscription_status
-
-  tags = merge(each.value.tags, {
-    Module    = "cloudfront"
-    ManagedBy = "terraform"
-  })
+  # Tags
+  tags = merge(
+    try(each.value.tags, {}),
+    {
+      Module    = "cloudfront"
+      ManagedBy = "terraform"
+    }
+  )
 }

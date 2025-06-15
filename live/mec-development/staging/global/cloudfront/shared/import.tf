@@ -9,9 +9,9 @@
 
 # Import phoenix-mec-staging distribution
 # First, find the distribution ID: aws cloudfront list-distributions --profile dev-mec
-# import {
-#   to = module.cloudfront.module.cloudfront_distributions["staging.mdquip.com"].aws_cloudfront_distribution.this[0]
-#   id = "E22KIKJ202IBCL"  # REPLACE with actual distribution ID
+#  import {
+#    to = module.cloudfront.module.cloudfront_distributions["staging.mdquip.com"].aws_cloudfront_distribution.this[0]
+#    id = "E2YRG2SBRZR17K"  # REPLACE with actual distribution ID
 # }
 
 # First, find OAI ID: aws cloudfront list-cloud-front-origin-access-identities --profile dev-mec
