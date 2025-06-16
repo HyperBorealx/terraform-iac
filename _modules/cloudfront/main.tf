@@ -3,8 +3,6 @@ module "cloudfront_distributions" {
   version = "4.1.0"
 
   for_each = var.distributions
-
-  # Pass through all configuration directly
   aliases                         = try(each.value.aliases, [])
   comment                         = try(each.value.comment, "")
   continuous_deployment_policy_id = try(each.value.continuous_deployment_policy_id, null)
@@ -18,19 +16,19 @@ module "cloudfront_distributions" {
   wait_for_deployment             = try(each.value.wait_for_deployment, false)
   web_acl_id                      = try(each.value.web_acl_id, null)
 
-  # Origins and cache behaviors - pass through exactly as provided
+  # Origins and cache behaviors
   origin                 = each.value.origin
   origin_group           = try(each.value.origin_group, {})
   default_cache_behavior = each.value.default_cache_behavior
   ordered_cache_behavior = try(each.value.ordered_cache_behavior, [])
 
-  # Error handling and restrictions - prevent null value issues
+  # Error handling and restrictions
   custom_error_response = try(length(each.value.custom_error_response) > 0 ? each.value.custom_error_response : {}, {})
   viewer_certificate    = each.value.viewer_certificate
   geo_restriction       = try(each.value.geo_restriction, { restriction_type = "none", locations = [] })
   logging_config        = try(each.value.logging_config, {})
 
-  # Origin Access Control (OAC) - Modern approach
+  # Origin Access Control (OAC)
   create_origin_access_control = try(each.value.create_origin_access_control, false)
   origin_access_control       = try(each.value.origin_access_control, {})
 
@@ -51,7 +49,6 @@ module "cloudfront_distributions" {
     try(each.value.tags, {}),
     {
       Module    = "cloudfront"
-      ManagedBy = "terraform"
     }
   )
 }

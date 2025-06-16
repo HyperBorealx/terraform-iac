@@ -37,3 +37,13 @@ import {
   to = module.s3.module.s3_buckets["phoenix-mec-backup"].aws_s3_bucket.this[0]
   id = "phoenix-mec-backup"
 }
+
+import {
+  to = module.s3.module.s3_buckets["phoenix-mec-backup"].aws_s3_bucket_versioning.this[0]
+  id = "phoenix-mec-backup"
+}
+
+import {
+  to = module.s3.module.s3_buckets["phoenix-mec-backup"].aws_s3_bucket_server_side_encryption_configuration.this[0]
+  id = "phoenix-mec-backup"
+}

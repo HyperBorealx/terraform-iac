@@ -4,7 +4,14 @@
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
-          "oidc.eks.${region}.amazonaws.com/id/${eks_oidc_issuer_id}:sub": "system:serviceaccount:external-secrets:external-secrets"
+          "oidc.eks.eu-west-1.amazonaws.com/id/${eks_oidc_issuer_id}:aud": "sts.amazonaws.com"
+        },
+        "ForAnyValue:StringEquals": {
+          "oidc.eks.${region}.amazonaws.com/id/${eks_oidc_issuer_id}:sub": [
+            "system:serviceaccount:external-secrets:external-secrets",
+            "system:serviceaccount:networking:external-secrets",
+            "system:serviceaccount:security:external-secrets"
+          ]
         }
       },
       "Effect": "Allow",

@@ -1,0 +1,36 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "sts:AssumeRole",
+      "Resource": "arn:aws:iam::*:role/atlantisexecution",
+      "Sid": "AtlantisExecution",
+      "Condition": {
+        "StringEquals": {
+          "aws:PrincipalOrgID": [
+            "o-nsdvqd62c2",
+            "o-038my660mb"
+          ]
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:*",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:Encrypt",
+        "kms:DescribeKey",
+        "kms:Decrypt",
+        "kms:Create*"
+      ],
+      "Resource": [
+        "arn:aws:s3:::psl-group-central-terraform-state",
+        "arn:aws:s3:::psl-group-central-terraform-state/*"
+      ],
+      "Sid": "TerraformS3Access"
+    }
+  ]
+}

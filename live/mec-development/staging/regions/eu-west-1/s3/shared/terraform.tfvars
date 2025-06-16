@@ -10,6 +10,17 @@ buckets = {
       ComputeType   = "S3"
       SLALevel      = "Tier3"
     }
+    versioning = {
+      enabled = true
+    }
+    server_side_encryption_configuration = {
+      rule = {
+        apply_server_side_encryption_by_default = {
+          sse_algorithm = "AES256" # This enables SSE-S3 (Amazon S3 managed keys)
+        }
+        bucket_key_enabled = true # This enables the S3 Bucket Key feature
+      }
+    }
   }
 
   phoenix-mec-staging = {

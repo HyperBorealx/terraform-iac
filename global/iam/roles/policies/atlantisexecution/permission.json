@@ -1,0 +1,57 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "appconfig:*",
+        "s3:*",
+        "iam:*",
+        "kms:*",
+        "codeartifact:*",
+        "codedeploy:*",
+        "applicationinsights:*",
+        "application-autoscaling:*",
+        "sns:*",
+        "sqs:*",
+        "ssm:*",
+        "states:*",
+        "pipes:*",
+        "lambda:*",
+        "logs:*",
+        "cloudwatch:*",
+        "cognito:*",
+        "cognito-idp:*",
+        "kinesis:*",
+        "firehose:*",
+        "secretsmanager:*",
+        "resource-groups:*",
+        "scheduler:*",
+        "sts:*"
+      ],
+      "Resource": "*",
+      "Sid": "Application"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:*",
+        "ram:*",
+        "ecs:*",
+        "eks:*",
+        "ecr:*",
+        "dynamodb:*",
+        "es:*",
+        "elasticache:*"
+      ],
+      "Resource": "*",
+      "Sid": "Compute"
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["route53:*", "apigateway:*", "cloudfront:*", "acm:*", "elasticloadbalancing:*"],
+      "Resource": "*",
+      "Sid": "Network"
+    }
+  ]
+}

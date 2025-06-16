@@ -2,7 +2,7 @@ variable "clusters" {
   description = "Map of EKS clusters to create"
   type = map(object({
     cluster_name                             = string
-    cluster_version                          = optional(string, "1.32")
+    cluster_version                          = optional(string, "1.33")
     vpc_id                                   = string
     subnet_ids                               = list(string)
     cluster_endpoint_public_access           = optional(bool, false)

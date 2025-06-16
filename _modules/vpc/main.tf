@@ -1,41 +1,42 @@
-data "aws_availability_zones" "available" {
-  # Exclude local zones
-  filter {
-    name   = "opt-in-status"
-    values = ["opt-in-not-required"]
-  }
-}
-
-locals {
-  name     = var.name
-  region   = var.region
-  vpc_cidr = var.vpc_cidr
-  azs      = slice(data.aws_availability_zones.available.names, 0, 3)
-  tags     = var.tags
-}
-
-module "vpc" {
+module "vpcs" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 5.0"
 
-  name = local.name
-  cidr = local.vpc_cidr
+  for_each = var.vpcs
 
-  azs             = local.azs
-  private_subnets = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 4, k)]
-  public_subnets  = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 48)]
-  intra_subnets   = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 52)]
+  name       = each.key
+  cidr       = each.value.vpc_cidr
+  create_igw = each.value.create_igw
 
-  enable_nat_gateway = true
-  single_nat_gateway = true
+  azs              = ["${each.value.region}a", "${each.value.region}b", "${each.value.region}c"]
+  private_subnets  = each.value.private_subnets
+  public_subnets   = each.value.public_subnets
+  database_subnets = each.value.database_subnets
 
-  public_subnet_tags = {
-    "kubernetes.io/role/elb" = 1
-  }
+  enable_dns_hostnames                 = each.value.enable_dns_hostnames
+  enable_nat_gateway                   = each.value.enable_nat_gateway
+  enable_flow_log                      = each.value.enable_flow_log
+  create_flow_log_cloudwatch_iam_role  = each.value.create_flow_log_cloudwatch_iam_role
+  create_flow_log_cloudwatch_log_group = each.value.create_flow_log_cloudwatch_log_group
+  flow_log_destination_arn             = each.value.flow_log_destination_arn
+  flow_log_destination_type            = each.value.flow_log_destination_type
 
-  private_subnet_tags = {
-    "kubernetes.io/role/internal-elb" = 1
-  }
+  create_database_subnet_group       = each.value.create_database_subnet_group
+  create_database_subnet_route_table = each.value.create_database_subnet_route_table
 
-  tags = local.tags
+  manage_default_security_group = each.value.manage_default_security_group
+  manage_default_network_acl    = each.value.manage_default_network_acl
+  manage_default_route_table    = each.value.manage_default_route_table
+
+  public_subnet_tags  = each.value.public_subnet_tags
+  private_subnet_tags = each.value.private_subnet_tags
+
+  tags = merge(each.value.tags, { TerraformTrack = trim(
+    replace(
+      path.cwd,
+      regexall("^.*/live/", path.cwd)[0],
+      ""
+    ),
+    "/"
+  ) })
 }

@@ -5,9 +5,9 @@ data "terraform_remote_state" "eks" {
   backend = "s3" # Adjust as needed based on your backend configuration
 
   config = {
-    bucket  = "psl-group-central-terraform-state"
-    key     = "shared-services/prod/eu-west-1/eks/devops/terraform.tfstate"
-    region  = "eu-west-1"
+    bucket = "psl-group-central-terraform-state"
+    key    = "shared-services/prod/eu-west-1/eks/devops/terraform.tfstate"
+    region = "eu-west-1"
   }
 }
 
@@ -15,7 +15,6 @@ data "terraform_remote_state" "eks" {
 data "aws_eks_cluster_auth" "cluster" {
   name = "shared-services-prod"
 }
-
 
 # First create the namespace so we can create secrets in it
 resource "kubernetes_namespace" "argocd" {
@@ -39,7 +38,7 @@ resource "kubernetes_secret" "argocd_repo_shared_services" {
     url                     = "https://github.com/PSL-Group-Services-Sarl/shared-services-gitops.git"
     githubAppID             = "1235129"
     githubAppInstallationID = "65885338"
-    githubAppPrivateKey = data.sops_file.this.data["argocd.githubAppPrivateKey"]
+    githubAppPrivateKey     = data.sops_file.this.data["argocd.githubAppPrivateKey"]
   }
 }
 
@@ -48,7 +47,7 @@ resource "helm_release" "argocd" {
   name       = "argocd"
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argo-cd"
-  version    = "7.9.0"
+  version    = "8.0.14"
   namespace  = kubernetes_namespace.argocd.metadata[0].name
 
   values = [

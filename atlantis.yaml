@@ -5,6 +5,9 @@ workflows:
   terraform:
     plan:
       steps:
+        - env:
+            name: TF_PLUGIN_CACHE_DIR
+            value: /atlantis-data/plugin-cache
         - run: terraform init
         - run: terraform plan -out=$PLANFILE
     apply:
@@ -12,8 +15,20 @@ workflows:
         - run: terraform apply $PLANFILE
 
 projects:
-  - name: mec-development-staging-cloudfront
-    dir: live/mec-development/staging/global/cloudfront/shared
+  - name: global-iam-roles
+    dir: global/iam/roles
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars", "policies/**/*.json"]
+      enabled: true
+  - name: noc-1-test-vpc
+    dir: live/noc-1/sandbox/regions/eu-west-1/vpc
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+  - name: shared-services-eks
+    dir: live/shared-services/prod/regions/eu-west-1/eks/devops
     workflow: terraform
     autoplan:
       when_modified: ["*.tf", "*.tfvars"]
@@ -22,7 +37,7 @@ projects:
     dir: live/shared-services/prod/commons/iam-roles
     workflow: terraform
     autoplan:
-      when_modified: ["*.tf", "*.tfvars"]
+      when_modified: ["*.tf", "*.tfvars", "policies/**/*.json"]
       enabled: true
   - name: shared-services-prod-s3-buckets
     dir: live/shared-services/prod/regions/eu-west-1/s3/devops
@@ -42,26 +57,111 @@ projects:
     autoplan:
       when_modified: ["*.tf", "*.tfvars"]
       enabled: true
-  - name: mec-development-prod-iam
-    dir: live/mec-development/prod/commons/iam-roles/devops
+  - name: mec-development-nonprod-phoenix-s3
+    dir: live/mec-development/nonprod/regions/eu-west-1/s3/phoenix
     workflow: terraform
     autoplan:
       when_modified: ["*.tf", "*.tfvars"]
       enabled: true
-  - name: mec-development-staging-s3
+  - name: mec-development-nonprod-shared-s3
+    dir: live/mec-development/nonprod/regions/eu-west-1/s3/shared
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+  - name: mec-development-staging-shared-s3
     dir: live/mec-development/staging/regions/eu-west-1/s3/shared
     workflow: terraform
     autoplan:
       when_modified: ["*.tf", "*.tfvars"]
       enabled: true
-  - name: main-prd-devops-iam
-    dir: live/main/prod/commons/iam-roles/devops
+  - name: mec-development-staging-sharedcomponent-s3
+    dir: live/mec-development/staging/regions/eu-west-1/s3/SharedComponents
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+  - name: mec-development-staging-phoenix-s3
+    dir: live/mec-development/staging/regions/eu-west-1/s3/phoenix
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+  - name: mec-development-sandbox-ec2
+    dir: live/mec-development/sandbox/regions/eu-west-1/ec2/mec
     workflow: terraform
     autoplan:
       when_modified: ["*.tf", "*.tfvars"]
       enabled: true
   - name: main-prd-sc-iam
     dir: live/main/prod/commons/iam-roles/sharedcomponent
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars", "policies/**/*.json"]
+      enabled: true
+  - name: Application-Development-Sandbox-dev-ec2
+    dir: live/Application-Development-Sandbox/dev/regions/eu-west-1/ec2/noc
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+  - name: psl-aws-mec-account-dev-ec2
+    dir: live/psl-aws-mec-account/sandbox/regions/eu-west-1/ec2/mec
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+  - name: mec-development-staging-static-secrets
+    dir: live/mec-development/staging/regions/eu-west-1/static-secrets
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars", "secrets.yaml"]
+      enabled: true
+  - name: mec-development-staging-acm
+    dir: live/mec-development/staging/regions/us-east-1/acm
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+  - name: phoenix-prod-mec-s3
+    dir: live/phoenix-prod/prod/regions/eu-west-1/s3/mec
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+  - name: phoenix-prod-phoenix-s3
+    dir: live/phoenix-prod/prod/regions/eu-west-1/s3/phoenix
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+  - name: phoenix-prod-phoenix-eu-east-1-s3
+    dir: live/phoenix-prod/prod/regions/eu-east-1/s3/phoenix
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+  - name: phoenix-prod-shared-s3
+    dir: live/phoenix-prod/prod/regions/eu-west-1/s3/shared
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+  - name: phoenix-prod-SharedComponents-s3
+    dir: live/phoenix-prod/prod/regions/eu-west-1/s3/SharedComponents
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+  - name: prod-cdn-mec-prod-mec-s3
+    dir: live/prod-cdn-mec/prod/regions/eu-west-1/s3/mec
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+
+  - name: mec-development-staging-cloudfront
+    dir: live/mec-development/staging/global/cloudfront/shared
     workflow: terraform
     autoplan:
       when_modified: ["*.tf", "*.tfvars"]

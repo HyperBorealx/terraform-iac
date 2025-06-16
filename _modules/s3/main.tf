@@ -16,8 +16,15 @@ module "s3_buckets" {
   attach_policy                         = each.value.attach_policy
   policy                                = each.value.policy
   attach_public_policy                  = each.value.attach_public_policy
-  tags                                  = each.value.tags
-  cors_rule                             = each.value.cors_rule
-  object_ownership                      = each.value.object_ownership
-  grant                                 = each.value.grant
+  tags = merge(each.value.tags, { TerraformTrack = trim(
+    replace(
+      path.cwd,
+      regexall("^.*/live/", path.cwd)[0],
+      ""
+    ),
+    "/"
+  ) })
+  cors_rule        = each.value.cors_rule
+  object_ownership = each.value.object_ownership
+  grant            = each.value.grant
 }

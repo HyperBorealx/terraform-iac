@@ -1,10 +1,7 @@
-# provider "aws" {
-#   region = "eu-west-1"
-
-#   assume_role {
-#     role_arn = "arn:aws:iam::300476207176:role/atlantisexecution"
-#   }
-# }
+provider "aws" {
+  region  = "eu-west-1"
+  profile = "ss"
+}
 
 terraform {
   required_providers {

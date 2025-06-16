@@ -18,9 +18,9 @@ module "eks" {
   cluster_security_group_additional_rules = {
     ingress_vpc_cidr = {
       description = "Allow ingress from 10.0.0.0/8"
-      protocol    = "-1"    # All protocols
-      from_port   = 0       # All ports
-      to_port     = 0       # All ports
+      protocol    = "-1" # All protocols
+      from_port   = 0    # All ports
+      to_port     = 0    # All ports
       cidr_blocks = ["10.0.0.0/8"]
       type        = "ingress"
     }
@@ -34,6 +34,13 @@ module "eks" {
 
   # Configure EKS managed node groups
   eks_managed_node_groups = each.value.eks_managed_node_groups
- 
-  tags = each.value.tags
+
+  tags = merge(each.value.tags, { TerraformTrack = trim(
+    replace(
+      path.cwd,
+      regexall("^.*/live/", path.cwd)[0],
+      ""
+    ),
+    "/"
+  ) })
 }

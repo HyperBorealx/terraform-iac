@@ -1,0 +1,20 @@
+{
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::300476207176:role/atlantisbase"
+      },
+      "Action": ["sts:TagSession", "sts:AssumeRole"],
+      "Condition": {
+        "StringEquals": {
+          "aws:PrincipalOrgID": [
+            "o-nsdvqd62c2",
+            "o-038my660mb"
+          ]
+        }
+      }
+    }
+  ],
+  "Version": "2012-10-17"
+}

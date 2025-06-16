@@ -5,7 +5,7 @@ variable "buckets" {
     acl                                   = optional(string, null)
     force_destroy                         = optional(bool, false)
     versioning                            = optional(map(any), {})
-    server_side_encryption_configuration  = optional(map(any), {})
+    server_side_encryption_configuration  = optional(any, {})
     kms_key_id                            = optional(string)
     lifecycle_rule                        = optional(any, [])
     logging                               = optional(map(any), {})

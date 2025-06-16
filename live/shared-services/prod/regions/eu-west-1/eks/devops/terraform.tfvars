@@ -1,5 +1,5 @@
 clusters = {
-  "shared-services-prod" = {
+  shared-services-prod = {
     cluster_name = "shared-services-prod"
     vpc_id       = "vpc-0a29462de21f69a10"
     subnet_ids   = ["subnet-012dfd10592800c0b", "subnet-071436070936b8e6e"]
@@ -8,13 +8,10 @@ clusters = {
       node_pools = ["general-purpose", "system"]
     }
 
-    # Use API-only authentication mode for better security
     authentication_mode = "API"
-    # Define IAM role access
     access_entries = {
-      # Cluster admin role
       "admin-role" = {
-        principal_arn = "arn:aws:iam::300476207176:role/aws-reserved/sso.amazonaws.com/eu-west-1/AWSReservedSSO_psl-sso-develprs-codeartifct-stg_032cf58dff723fd8"
+        principal_arn = "arn:aws:iam::300476207176:role/aws-reserved/sso.amazonaws.com/eu-west-1/AWSReservedSSO_psl-devops-admin_dd6706127c8fe275"
         policy_associations = {
           admin_policy = {
             policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
