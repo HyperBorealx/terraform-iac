@@ -1,3 +1,6 @@
 * @PSL-Group-Services-Sarl/devops @PSL-Group-Services-Sarl/noc
 /_modules/vpc @PSL-Group-Services-Sarl/noc
+/_modules/ec2 @PSL-Group-Services-Sarl/noc
 /_modules/eks-cluster @PSL-Group-Services-Sarl/devops @PSL-Group-Services-Sarl/noc
+/_modules/iam-role @PSL-Group-Services-Sarl/security
+/_modules/kms @PSL-Group-Services-Sarl/security

@@ -60,3 +60,17 @@ output "private_route_table_ids" {
     for k, vpc in module.vpcs : k => vpc.private_route_table_ids
   }
 }
+
+output "transit_gateway_vpc_attachment_ids" {
+  description = "IDs of the transit gateway VPC attachments"
+  value = {
+    for k, attachment in aws_ec2_transit_gateway_vpc_attachment.this : k => attachment.id
+  }
+}
+
+output "transit_gateway_vpc_attachment_accepter_ids" {
+  description = "IDs of the transit gateway VPC attachment accepters"
+  value = {
+    for k, accepter in aws_ec2_transit_gateway_vpc_attachment_accepter.this : k => accepter.id
+  }
+}

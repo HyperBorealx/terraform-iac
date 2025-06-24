@@ -22,6 +22,7 @@ vpcs = {
     ]
     enable_flow_log = false
     create_database_subnet_route_table = true
+    auto_accept_shared_attachments = false
     tags = {
       Owner       = "NOC"
       DRI         = "NOC"

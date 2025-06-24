@@ -1,10 +1,10 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "20.36.0"
+  version = "20.37.1"
 
   for_each = var.clusters
 
-  cluster_name                             = each.value.cluster_name
+  cluster_name                             = each.key
   cluster_version                          = each.value.cluster_version
   vpc_id                                   = each.value.vpc_id
   subnet_ids                               = each.value.subnet_ids

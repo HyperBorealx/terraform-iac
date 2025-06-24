@@ -29,7 +29,6 @@ locals {
     }
   ]...)
 
-
   all_subnet_ids = {
     for vpc_key in keys(var.vpcs) :
     vpc_key => concat(

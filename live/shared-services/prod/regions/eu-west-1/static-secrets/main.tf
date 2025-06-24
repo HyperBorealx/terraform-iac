@@ -14,6 +14,6 @@ module "eks_shared_services_prod" {
 
   tags = {
     ResourceType = "EKS"
-    ClusterName  = "shared-services-prod"
+    Name         = "shared-services-prod"
   }
 }

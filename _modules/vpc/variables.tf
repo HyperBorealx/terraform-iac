@@ -36,5 +36,6 @@ variable "vpcs" {
     transit_gateway_id                         = optional(string, "tgw-08f09b45996504712")
     association_transit_gateway_route_table_id = optional(string, "tgw-rtb-05978c3d0f79eeb2c")
     pan_transit_gateway_route_table_id         = optional(string, "tgw-rtb-0c12f26443088fdfb")
+    auto_accept_shared_attachments             = optional(bool, true)
   }))
 }

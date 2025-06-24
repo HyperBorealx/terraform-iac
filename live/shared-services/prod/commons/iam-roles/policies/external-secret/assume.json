@@ -10,7 +10,8 @@
           "oidc.eks.${region}.amazonaws.com/id/${eks_oidc_issuer_id}:sub": [
             "system:serviceaccount:external-secrets:external-secrets",
             "system:serviceaccount:networking:external-secrets",
-            "system:serviceaccount:security:external-secrets"
+            "system:serviceaccount:security:external-secrets",
+            "system:serviceaccount:arc-system:external-secrets"
           ]
         }
       },

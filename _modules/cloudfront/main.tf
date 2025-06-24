@@ -45,10 +45,11 @@ module "cloudfront_distributions" {
   realtime_metrics_subscription_status    = try(each.value.realtime_metrics_subscription_status, "Enabled")
 
   # Tags
-  tags = merge(
-    try(each.value.tags, {}),
-    {
-      Module    = "cloudfront"
-    }
-  )
+  tags = merge(each.value.tags, { TerraformTrack = trim(
+      replace(
+      path.cwd,
+      regexall("^.*/live/", path.cwd)[0],
+      ""),
+      "/"
+      ) })
 }

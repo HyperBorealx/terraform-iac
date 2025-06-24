@@ -54,7 +54,6 @@ distributions = {
       Environment   = "staging"
       Purpose       = "test-validation"
       Owner         = "DevOps"
-      TestPhase     = "module-validation"
     }
   }
 
@@ -181,7 +180,6 @@ distributions = {
       Environment = "staging"
       Purpose     = "test-lambda-edge"
       Owner       = "DevOps"
-      TestPhase   = "lambda-edge-validation"
     }
   }
     # ACM Certificate test distribution
@@ -276,19 +274,19 @@ distributions = {
 
       lambda_function_association = {
         origin-response = {
-          lambda_arn   = "arn:aws:lambda:us-east-1:205551755912:function:phoenix-staging-mdquip-origin-response-lambda-edge:735"
+          lambda_arn   = "arn:aws:lambda:us-east-1:205551755912:function:phoenix-staging-mdquip-origin-response-lambda-edge:736"
           include_body = false
         }
         origin-request = {
-          lambda_arn   = "arn:aws:lambda:us-east-1:205551755912:function:phoenix-staging-mdquip-origin-request-lambda-edge:737"
+          lambda_arn   = "arn:aws:lambda:us-east-1:205551755912:function:phoenix-staging-mdquip-origin-request-lambda-edge:738"
           include_body = false
         }
         viewer-response = {
-          lambda_arn   = "arn:aws:lambda:us-east-1:205551755912:function:phoenix-staging-mdquip-viewer-response-lambda-edge:735"
+          lambda_arn   = "arn:aws:lambda:us-east-1:205551755912:function:phoenix-staging-mdquip-viewer-response-lambda-edge:736"
           include_body = false
         }
         viewer-request = {
-          lambda_arn   = "arn:aws:lambda:us-east-1:205551755912:function:phoenix-staging-mdquip-viewer-request-lambda-edge:474"
+          lambda_arn   = "arn:aws:lambda:us-east-1:205551755912:function:phoenix-staging-mdquip-viewer-request-lambda-edge:475"
           include_body = false
         }
       }
@@ -315,10 +313,9 @@ distributions = {
     create_origin_access_identity = false
 
     tags = {
-      Account     = "mec-development"
+      BusinessGroup  = "PhysicianApps"
       Environment = "staging"
-      Purpose     = "production-mdquip"
-      Owner       = "DevOps"
+      protect     = "cloudfront"
     }
   }
 
