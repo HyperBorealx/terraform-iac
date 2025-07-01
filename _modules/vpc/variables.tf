@@ -2,6 +2,7 @@ variable "vpcs" {
   description = "Map of VPCs to create with their configurations"
   type = map(object({
     vpc_cidr         = string
+    secondary_vpc_cidrs = optional(list(string), [])
     private_subnets  = optional(list(string), [])
     public_subnets   = optional(list(string), [])
     database_subnets = optional(list(string), [])

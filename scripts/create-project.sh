@@ -40,7 +40,7 @@ variable "clusters" {
 }
 
 module "eks_clusters" {
-  source = "../../../../../../_modules/eks-cluster"
+  source = "../../../../../../_modules/eks"
   
   clusters = var.clusters
 }

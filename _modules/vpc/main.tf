@@ -6,6 +6,7 @@ module "vpcs" {
 
   name       = each.key
   cidr       = each.value.vpc_cidr
+  secondary_cidr_blocks = each.value.secondary_vpc_cidrs
   create_igw = each.value.create_igw
 
   azs              = ["${each.value.region}a", "${each.value.region}b", "${each.value.region}c"]

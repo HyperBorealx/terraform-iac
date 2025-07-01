@@ -26,6 +26,7 @@ locals {
         vpc_key        = vpc_key
         route_table_id = vpc_out.database_route_table_ids[idx]
       }
+      if length(var.vpcs[vpc_key].database_subnets) > 0
     }
   ]...)
 

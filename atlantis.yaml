@@ -50,7 +50,7 @@ projects:
           ".terraform.lock.hcl",
           "*.tf",
           "*.tfvars",
-          "../../../../../../_modules/vpc/**/*.tf",
+          "../../../../../../_modules/vpc/*.tf",
         ]
       enabled: true
   - name: ss-eks-vpc
@@ -74,9 +74,9 @@ projects:
           ".terraform.lock.hcl",
           "*.tf",
           "*.tfvars",
-          "../../../../../../../_modules/eks-cluster/*.tf",
+          "../../../../../../../_modules/eks/*.tf",
         ]
-      enabled: true  
+      enabled: true
   - name: shared-services-eks
     dir: live/shared-services/prod/regions/eu-west-1/eks/devops
     workflow: terraform
@@ -86,7 +86,7 @@ projects:
           ".terraform.lock.hcl",
           "*.tf",
           "*.tfvars",
-          "../../../../../../../_modules/eks-cluster/*.tf",
+          "../../../../../../../_modules/eks/*.tf",
         ]
       enabled: true
   - name: shared-services-prod-common-iam-roles
@@ -200,7 +200,7 @@ projects:
         ]
       enabled: true
   - name: mec-development-sandbox-ec2
-    dir: live/mec-development/sandbox/regions/eu-west-1/ec2/mec
+    dir: live/mec-development/sandbox/regions/eu-west-1/ec2
     workflow: terraform
     autoplan:
       when_modified:
@@ -211,6 +211,18 @@ projects:
           "../../../../../../../_modules/ec2/*.tf",
         ]
       enabled: true
+  - name: mec-development-staging-shared-redis
+    dir: live/mec-development/staging/regions/eu-west-1/elasticache/shared
+    workflow: terraform
+    autoplan:
+      when_modified:
+        [
+          ".terraform.lock.hcl",
+          "*.tf",
+          "*.tfvars",
+          "../../../../../../../_modules/elasticache/*.tf"
+        ]
+      enabled: true 
   - name: main-prd-sc-iam
     dir: live/main/prod/commons/iam-roles/sharedcomponent
     workflow: terraform
@@ -225,7 +237,7 @@ projects:
         ]
       enabled: true
   - name: Application-Development-Sandbox-dev-ec2
-    dir: live/Application-Development-Sandbox/dev/regions/eu-west-1/ec2/noc
+    dir: live/Application-Development-Sandbox/dev/regions/eu-west-1/ec2
     workflow: terraform
     autoplan:
       when_modified:
@@ -237,7 +249,7 @@ projects:
         ]
       enabled: true
   - name: psl-aws-mec-account-dev-ec2
-    dir: live/psl-aws-mec-account/sandbox/regions/eu-west-1/ec2/mec
+    dir: live/psl-aws-mec-account/sandbox/regions/eu-west-1/ec2
     workflow: terraform
     autoplan:
       when_modified:
@@ -356,4 +368,58 @@ projects:
     workflow: terraform
     autoplan:
       when_modified: [".terraform.lock.hcl", "*.tf", "*.tfvars"]
+      enabled: true
+  - name: shared-services-ec2
+    dir: live/shared-services/prod/regions/eu-west-1/ec2
+    workflow: terraform
+    autoplan:
+      when_modified:
+        [
+          ".terraform.lock.hcl",
+          "*.tf",
+          "*.tfvars",
+          "../../../../../../../_modules/ec2/*.tf",
+        ]
+      enabled: true
+  - name: shared-services-prod-us-east-2-ec2
+    dir: live/shared-services/prod/regions/us-east-2/ec2
+    workflow: terraform
+    autoplan:
+      when_modified:
+        [
+          ".terraform.lock.hcl",
+          "*.tf",
+          "*.tfvars",
+          "../../../../../../../_modules/ec2/*.tf",
+        ]
+      enabled: true
+  - name: main-prod-ap-southeast-1-ec2
+    dir: live/main/prod/regions/ap-southeast-1/ec2
+    workflow: terraform
+    autoplan:
+      when_modified:
+        [
+          ".terraform.lock.hcl",
+          "*.tf",
+          "*.tfvars",
+          "../../../../../../../_modules/ec2/*.tf",
+        ]
+      enabled: true
+  - name: phoenix-prod-eu-west-1-ec2
+    dir: live/phoenix-prod/prod/regions/eu-west-1/ec2
+    workflow: terraform
+    autoplan:
+      when_modified:
+        [
+          ".terraform.lock.hcl",
+          "*.tf",
+          "*.tfvars",
+          "../../../../../../../_modules/ec2/*.tf",
+        ]
+      enabled: true
+  - name: mec-development-staging-lambda-edge
+    dir: live/mec-development/staging/regions/us-east-1/lambda-edge
+    workflow: terraform
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
       enabled: true
